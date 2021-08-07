@@ -1,0 +1,25 @@
+.message{
+    background: #28b;
+    color: #eee;
+    width: 80vw;
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+
+    
+}
+
+.message .message-content{
+    width: 80%;
+    padding: 20px;
+}
+
+.delete-button{
+    background: #d82;
+    color: #eee;
+    cursor: pointer;
+    width: 20vw;
+    padding: 20px;
+    text-align: center;
+    font-weight: 800;
+}

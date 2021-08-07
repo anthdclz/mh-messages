@@ -45,7 +45,7 @@ class ChatPage extends React.Component {
         return(
             <div id="chat-page">
                 {chatList.map(({...message}, key) => (
-                    <MessageComponent key={key} index={key} {...message} />
+                    <MessageComponent key={key} index={key} deleteMessage={this.deleteMessage} {...message} />
                 ))}
             </div>
         )
