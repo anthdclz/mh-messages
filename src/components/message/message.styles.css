@@ -4,16 +4,16 @@
     width: 80vw;
     margin: 20px 0;
     display: flex;
-    justify-content: space-between;
-
-    
+    justify-content: space-between;   
 }
-
 .message .message-content{
     width: 80%;
     padding: 20px;
 }
-
+.message-content .message-details{
+    font-size: 12px;
+    margin-top: 10px;
+}
 .delete-button{
     background: #d82;
     color: #eee;

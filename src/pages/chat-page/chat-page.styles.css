@@ -1,3 +1,10 @@
 #chat-page {
-    margin: 50px;
+    margin: 50px 30px;
+    text-align: left;
+ }
+
+ .chat-button {
+     color: #28b;
+     cursor: pointer;
+     font-weight: 800;
  }
