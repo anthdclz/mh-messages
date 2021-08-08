@@ -1,8 +1,9 @@
 import React from 'react';
-import './chat-page.styles.css';
 import { chat } from './chat.data.json';
 
 import MessageComponent from '../../components/message/message.component';
+import ChatButtonComponent from '../../components/chat-button/chat-button.component';
+import './chat-page.styles.css';
 
 class ChatPage extends React.Component {
     constructor(){
@@ -10,18 +11,16 @@ class ChatPage extends React.Component {
         this.state = {
             chatList: [],
             isSorted: false,
-            sortType: 'asc'
+            sortType: 'asc',
+            nextEntry: 5
         }
     }
-    deleteMessage = (key) => {
+    deleteMessage = (index) => {
         const newList = this.state.chatList;
-        delete newList[key];
+        delete newList[index];
         this.setState({
             chatList: newList
         });
-    }
-    componentDidUpdate(){
-        console.log('update...');
     }
     toggleSort = () => {
         const {sortType, chatList} = this.state;
@@ -37,6 +36,14 @@ class ChatPage extends React.Component {
             isSorted: true,
             sortType: sortType === 'desc' ? 'asc' : 'desc'
         });
+    }
+    addNextPage = () => {
+        const { chatList, nextEntry} = this.state;
+        if( nextEntry < chatList.length){
+            this.setState({
+                nextEntry: nextEntry + 5
+            });
+        }
     }
     componentDidMount(){
         // Dedupe Messages
@@ -55,17 +62,19 @@ class ChatPage extends React.Component {
         });
     }
     render(){
-        const { chatList, isSorted, sortType } = this.state;
+        const { chatList, isSorted, sortType, nextEntry } = this.state;
+        const sortText = !isSorted ? 'Sort' : sortType === 'desc' ? 'Sorted by Newest First' : 'Sorted by Oldest First';
         return(
             <div id="chat-page">
-                <div><span className="chat-button" onClick={this.toggleSort}>
-                    {
-                        !isSorted ? 'Sort' : sortType === 'desc' ? 'Sorted by Newest First' : 'Sorted by Oldest First'
-                    }
-                </span></div>
-                {chatList.map(({...message}, key) => (
-                    <MessageComponent key={key} index={key} deleteMessage={this.deleteMessage} {...message} />
+                <div>
+                    <ChatButtonComponent handleClick={this.toggleSort} displayText={sortText}/>
+                </div>
+                {chatList.slice(0, nextEntry).map(({...messageProps}, index) => (
+                    <MessageComponent key={index} index={index} deleteMessage={this.deleteMessage} {...messageProps} />
                 ))}
+                {nextEntry < chatList.length ? (
+                    <ChatButtonComponent handleClick={this.addNextPage} displayText="Next Page"/>
+                ) : null}
             </div>
         )
     }
