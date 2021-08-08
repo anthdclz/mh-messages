@@ -8,7 +8,7 @@ class ChatPage extends React.Component {
     constructor(){
         super();
         this.state = {
-            chatList: chat
+            chatList: []
         }
     }
     deleteMessage = (key) => {
@@ -23,22 +23,19 @@ class ChatPage extends React.Component {
     }
     componentDidMount(){
         // Dedupe Messages
+        const originalList = chat;
+        const dedupedList = [];
         const listUniques = new Set();
-        const duplicateKeys = [];
-        let i=0;
-            for (const messageObject of this.state.chatList) {
+        for (const messageObject of originalList) {
             let msg = JSON.stringify({uuid: messageObject.uuid, content: messageObject.content});
-            if(listUniques.has(msg)){
-                duplicateKeys.push(i);
-            }else{
+            if(!listUniques.has(msg)){
                 listUniques.add(msg);
+                dedupedList.push(messageObject);
             }
-            i++;
         };
-        duplicateKeys.reverse();
-        for(const key of duplicateKeys){
-            this.deleteMessage(key);
-        }
+        this.setState({
+            chatList: dedupedList
+        });
     }
     render(){
         const { chatList } = this.state;

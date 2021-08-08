@@ -1,8 +1,10 @@
+import React from 'react';
+import { getDay, getMonth } from './message.utils';
 import './message.styles.css';
 
 const MessageComponent = ({content, senderUuid, sentAt, index, deleteMessage}) => {
     const d = new Date(sentAt);
-    const sentAtDisplayString = `${d.getDate()}, ${d.getFullYear()} at ${d.toString().substring(16)}`;
+    const sentAtDisplayString = `${getDay(d.getDay())}, ${getMonth(d.getMonth())} ${d.getDate()}, ${d.getFullYear()} at ${d.toString().substring(16)}`;
     return(
         <div className='message'>
             <span className='message-content'>
